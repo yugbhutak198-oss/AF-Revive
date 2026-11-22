@@ -120,7 +120,9 @@ if (FogColor.r > FogColor.g && FogColor.b > FogColor.g && FogColor.r <= .05 && F
 
 vec4 getendfog = vec4(gradientCircle(normalize(-worldPos.xyz)), clamp(smoothstep(0., 2.5, length(worldPos.xyz * 4.) / FogAndDistanceControl.w), 0.0, 0.85));
 endfog = getendfog;
-
+float farBlend = smoothstep(32.0, 48.0, camDis);
+vec3 snapped = floor(worldPos / 2.0 + 0.5) * 2.0;
+worldPos = mix(worldPos, snapped, farBlend);
     v_texcoord0 = a_texcoord0;
     v_lightmapUV = a_texcoord1;
     v_color0 = color;
